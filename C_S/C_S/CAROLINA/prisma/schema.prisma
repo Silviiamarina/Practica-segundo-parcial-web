@@ -1,0 +1,42 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+model Aspirante {
+  id              Int           @id @default(autoincrement())
+  nombre          String
+  identificacion  String
+  estado          String        @default("Activo")
+  inscripciones   Inscripcion[] // Campo de relación inversa
+}
+
+model Curso {
+  id              Int           @id @default(autoincrement())
+  descripcion     String
+  fecha_inicio    String
+  estado          String        @default("Activo")
+  inscripciones   Inscripcion[] // Campo de relación inversa
+}
+
+model Inscripcion {
+  id                Int       @id @default(autoincrement())
+  id_curso          Int
+  id_aspirante      Int
+  fecha             String
+  hora              String
+  valor_cancelado   Int
+  estado            String    @default("Activo")
+  aspirante         Aspirante @relation(fields: [id_aspirante], references: [id])
+  curso             Curso     @relation(fields: [id_curso], references: [id])
+}
