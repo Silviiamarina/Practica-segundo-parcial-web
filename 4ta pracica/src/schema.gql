@@ -1,0 +1,85 @@
+# ------------------------------------------------------
+# THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
+# ------------------------------------------------------
+
+type Concepto {
+  id: ID!
+  concepto: String
+  detalle: String
+  estado: String!
+  transacciones: [Transaccion!]
+}
+
+type Transaccion {
+  id: ID!
+  fecha: String!
+  ingreso: String!
+  egreso: String!
+  observacion: String!
+  transaccion: String!
+  estado: String!
+  caja: Caja!
+  concepto: Concepto!
+}
+
+type Caja {
+  id: ID!
+  descripcion: String
+  estado: String!
+  transacciones: [Transaccion!]
+}
+
+type Query {
+  cajas(estado: String): [Caja!]!
+  caja(id: ID!): Caja!
+  conceptos(estado: String): [Concepto!]!
+  concepto(id: ID!): Concepto!
+  transacciones(estado: String): [Transaccion!]!
+  transaccion(id: ID!): Transaccion!
+}
+
+type Mutation {
+  createCaja(createCajaInput: CreateCajaInput!): Caja!
+  updateCaja(updateCajaInput: UpdateCajaInput!): Caja!
+  removeCaja(id: ID!): Caja!
+  createConcepto(createConceptoInput: CreateConceptoInput!): Concepto!
+  updateConcepto(updateConceptoInput: UpdateConceptoInput!): Concepto!
+  removeConcepto(id: ID!): Concepto!
+  createTransaccion(createTransaccionInput: CreateTransaccionInput!): Transaccion!
+  updateTransaccion(updateTransaccionInput: UpdateTransaccionInput!): Transaccion!
+  removeTransaccion(id: ID!): Transaccion!
+}
+
+input CreateCajaInput {
+  descripcion: String
+  estado: String = "activo"
+}
+
+input UpdateCajaInput {
+  id: ID!
+}
+
+input CreateConceptoInput {
+  concepto: String
+  detalle: String
+  estado: String = "activo"
+}
+
+input UpdateConceptoInput {
+  id: ID!
+}
+
+input CreateTransaccionInput {
+  fecha: String!
+  cajaId: ID!
+  conceptoId: ID!
+  ingreso: String!
+  egreso: String!
+  observacion: String!
+  transaccion: String!
+  estado: String = "activo"
+}
+
+input UpdateTransaccionInput {
+  id: ID!
+}
